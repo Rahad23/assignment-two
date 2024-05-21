@@ -1,26 +1,27 @@
 import { Product } from "./product.interface";
 import { Product_ } from "./product.model";
 
+//const create product
 const createProductService = async (productData: Product) => {
   const result = await Product_.create(productData);
   return result;
 };
 
-//----------
+//get all product
 
 const getAllProductService = async () => {
   const result = await Product_.find();
   return result;
 };
 
-//----------
+//get one product data
 
 const getOneProductService = async (productId: string) => {
   const result = await Product_.findOne({ _id: productId });
   return result;
 };
 
-//----------
+//update one product with product id
 
 const updateOneProductService = async (productId: string, data: Product) => {
   const result = await Product_.updateOne(
@@ -34,7 +35,7 @@ const updateOneProductService = async (productId: string, data: Product) => {
   return updatedData;
 };
 
-//-----------
+//product delete with product id
 
 const productDeleteWithIdService = async (id: string) => {
   const result = await Product_.deleteOne({ _id: id });
@@ -45,7 +46,7 @@ const productDeleteWithIdService = async (id: string) => {
   return deleteProduct;
 };
 
-//------------
+//search product with product name
 
 const searchProductWithProductNameService = async (productName: string) => {
   const result = await Product_.find({ name: new RegExp(productName, "i") });
