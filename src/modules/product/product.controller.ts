@@ -108,11 +108,7 @@ const updateOneProductData = async (req: Request, res: Response) => {
     );
 
     //send response to client site
-    res.status(200).json({
-      success: true,
-      message: "Product updated successfully!",
-      data: result,
-    });
+    res.status(200).json(result);
   } catch (e) {
     //send error to client site
     res.status(500).json({
@@ -131,11 +127,7 @@ const deleteOneProduct = async (req: Request, res: Response) => {
     const result = await productService.productDeleteWithIdService(productId);
 
     //send response to client site
-    res.status(200).json({
-      success: true,
-      message: "Product deleted successfully!",
-      data: result,
-    });
+    res.status(200).json(result);
   } catch (e) {
     //send error to client site
     res.status(500).json({

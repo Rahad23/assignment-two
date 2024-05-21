@@ -32,26 +32,47 @@ const getOneProductService = async (productId: string) => {
 //update one product with product id
 
 const updateOneProductService = async (productId: string, data: Product) => {
-  const result = await Product_.updateOne(
-    { _id: productId },
-    { $set: data },
-    { new: true }
-  );
+  try {
+    const result = await Product_.updateOne(
+      { _id: productId },
+      { $set: data },
+      { new: true }
+    );
 
-  const updatedData = result.acknowledged && result.matchedCount ? data : {};
+    const updatedData =
+      result.acknowledged && result.matchedCount
+        ? { success: true, message: "Product updated successfully!", data }
+        : {};
 
-  return updatedData;
+    return updatedData;
+  } catch (e) {
+    return {
+      success: false,
+      message: "Product not found!",
+    };
+  }
 };
 
 //product delete with product id
 
 const productDeleteWithIdService = async (id: string) => {
-  const result = await Product_.deleteOne({ _id: id });
-  const deleteProduct =
-    result.acknowledged && result.deletedCount
-      ? null
-      : "Product not deleted try again!";
-  return deleteProduct;
+  try {
+    const result = await Product_.deleteOne({ _id: id });
+    const deleteProduct =
+      result.acknowledged && result.deletedCount
+        ? null
+        : "Product not deleted try again!";
+    return {
+      success: true,
+      message: "Product deleted successfully!",
+      data: deleteProduct,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      message: "Product not found!",
+    };
+  }
 };
 
 //search product with product name
