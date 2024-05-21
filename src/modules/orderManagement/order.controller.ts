@@ -8,13 +8,12 @@ const createOrder = async (req: Request, res: Response) => {
     const orderData = req.body;
 
     const productValidation = OrderSchema.safeParse(orderData);
-    console.log(productValidation.data);
+
     if (productValidation.success) {
       const result = await orderService.createOrderService(orderData);
       res.status(200).json(result);
     } else {
       //send error to client site
-
       const errorPath = productValidation.error.issues.map((errorData) =>
         errorData.path.map((path) => path)
       )[0][0];

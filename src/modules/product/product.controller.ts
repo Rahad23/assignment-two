@@ -45,18 +45,21 @@ const createProductController = async (req: Request, res: Response) => {
 // get all product data
 const getAllProductData = async (req: Request, res: Response) => {
   try {
+    
     const searchTerm = req.query.searchTerm as string;
 
     if (searchTerm) {
       const result = await productService.searchProductWithProductNameService(
         searchTerm
       );
+
       //send response search result to client site
       res.status(200).json({
         success: true,
         message: `Products matching search term ${searchTerm} fetched successfully!`,
         data: result,
       });
+      
     } else {
       const result = await productService.getAllProductService();
 
