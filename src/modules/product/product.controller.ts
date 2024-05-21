@@ -6,11 +6,13 @@ import { ProductSchema } from "./product.zod.validation";
 const createProductController = async (req: Request, res: Response) => {
   try {
     const productValidation = ProductSchema.safeParse(req.body);
+
     //zod validation and insert data to DB
     if (productValidation.success) {
       const result = await productService.createProductService(
         productValidation.data
       );
+
       //send response to client site
       res.status(200).json({
         success: true,
@@ -45,7 +47,6 @@ const createProductController = async (req: Request, res: Response) => {
 // get all product data
 const getAllProductData = async (req: Request, res: Response) => {
   try {
-    
     const searchTerm = req.query.searchTerm as string;
 
     if (searchTerm) {
@@ -59,7 +60,6 @@ const getAllProductData = async (req: Request, res: Response) => {
         message: `Products matching search term ${searchTerm} fetched successfully!`,
         data: result,
       });
-      
     } else {
       const result = await productService.getAllProductService();
 
