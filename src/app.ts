@@ -11,7 +11,7 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderManagementRouter);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("batch-3-assignment-2");
+  res.send({ message: "mission-2-assignment. " });
 });
 // route not found
 app.use((req, res) => {

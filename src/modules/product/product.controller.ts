@@ -6,7 +6,6 @@ import { ProductSchema } from "./product.zod.validation";
 const createProductController = async (req: Request, res: Response) => {
   try {
     const productValidation = ProductSchema.safeParse(req.body);
-
     //zod validation and insert data to DB
     if (productValidation.success) {
       const result = await productService.createProductService(
@@ -20,10 +19,17 @@ const createProductController = async (req: Request, res: Response) => {
       });
     } else {
       //send error to client site
+
+      const errorPath = productValidation.error.issues.map((errorData) =>
+        errorData.path.map((path) => path)
+      )[0][0];
+
       res.status(500).json({
         success: false,
         message: "Product Not created!",
-        data: productValidation,
+        data: `${
+          productValidation.error?.errors.map((data) => data.message)[0]
+        }; ${errorPath && `Check {${errorPath}} Path`}`,
       });
     }
   } catch (e) {
@@ -78,11 +84,7 @@ const getOneProductBuyId = async (req: Request, res: Response) => {
     const result = await productService.getOneProductService(productId);
 
     //send response to client site
-    res.status(200).json({
-      success: true,
-      message: "Product fetched successfully!",
-      data: result,
-    });
+    res.status(200).json(result);
   } catch (e) {
     //send error to client site
     res.status(500).json({

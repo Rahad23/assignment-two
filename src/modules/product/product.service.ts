@@ -17,8 +17,16 @@ const getAllProductService = async () => {
 //get one product data
 
 const getOneProductService = async (productId: string) => {
-  const result = await Product_.findOne({ _id: productId });
-  return result;
+  try {
+    const result = await Product_.findOne({ _id: productId });
+    return {
+      success: true,
+      message: "Product fetched successfully!",
+      data: result,
+    };
+  } catch (e) {
+    return { success: false, message: "Product not found" };
+  }
 };
 
 //update one product with product id
