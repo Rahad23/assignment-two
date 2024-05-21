@@ -10,16 +10,15 @@ app.use("/api/products", productRouter);
 //order management router
 app.use("/api/orders", orderManagementRouter);
 
+app.get("/", (req: Request, res: Response) => {
+  res.send("batch-3-assignment-2");
+});
 // route not found
 app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: "Route not found",
   });
-});
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("batch-3-assignment-2");
 });
 
 export default app;
