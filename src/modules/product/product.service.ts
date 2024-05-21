@@ -37,7 +37,7 @@ const updateOneProductService = async (productId: string, data: Product) => {
     { $set: data },
     { new: true }
   );
-  //
+
   const updatedData = result.acknowledged && result.matchedCount ? data : {};
 
   return updatedData;
