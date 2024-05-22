@@ -77,8 +77,14 @@ const productDeleteWithIdService = async (id: string) => {
 
 //search product with product name
 
-const searchProductWithProductNameService = async (productName: string) => {
-  const result = await Product_.find({ name: new RegExp(productName, "i") });
+const searchProductWithProductNameService = async (searchText: string) => {
+  const result = await Product_.find({
+    $or: [
+      { name: new RegExp(searchText, "i") },
+      { category: new RegExp(searchText, "i") },
+      { description: new RegExp(searchText, "i") },
+    ],
+  });
   return result;
 };
 
